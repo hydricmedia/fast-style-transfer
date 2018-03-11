@@ -55,40 +55,40 @@ def main():
 
     src_m3u_filepath = opts.in_path
     dest_m3u_filepath = opts.out
+    while True:
+        #1 get the src and dest m3u8 files  - which files need to be transcoded
+        if os.path.isfile(os.path.join(src_m3u_filepath,'test.m3u8')):
+            src_m3u8_obj = m3u8.load(os.path.join(src_m3u_filepath,'test.m3u8'))  # this could also be an absolute filename
+            src_segment_uris = set([x.uri for x in src_m3u8_ojb.segments])
+        else:
+            src_segment_uris = set()
+        import os.path
+        if os.path.isfile(os.path.join(dest_m3u_filepath,'test.m3u8')):
+            dest_m3u8_obj = m3u8.load(os.path.join(dest_m3u_filepath,'test.m3u8'))  # this could also be an absolute filename
+            dest_segment_uris = set([x.uri for x in src_m3u8_ojb.segments])
+        else:
+            dest_segment_uris = set()
 
-    #1 get the src and dest m3u8 files  - which files need to be transcoded
-    if os.path.isfile(os.path.join(src_m3u_filepath,'test.m3u8')):
-        src_m3u8_obj = m3u8.load(os.path.join(src_m3u_filepath,'test.m3u8'))  # this could also be an absolute filename
-        src_segment_uris = set([x.uri for x in src_m3u8_ojb.segments])
-    else:
-        src_segment_uris = set()
-    import os.path
-    if os.path.isfile(os.path.join(dest_m3u_filepath,'test.m3u8')):
-        dest_m3u8_obj = m3u8.load(os.path.join(dest_m3u_filepath,'test.m3u8'))  # this could also be an absolute filename
-        dest_segment_uris = set([x.uri for x in src_m3u8_ojb.segments])
-    else:
-        dest_segment_uris = set()
+        segment_uris_to_transcode = src_segment_uris.difference(dest_segment_uris)
 
-    segment_uris_to_transcode = src_segment_uris.difference(dest_segment_uris)
+        #3 delete superfluous files
+        segment_uris_to_delete = dest_segment_uris.difference(src_segment_uris)
+        for segment_uri in segment_uris_to_delete:
+            import os
+            os.remove(os.join(dest_m3u_filepath, segment_uri))
+            print('Deleting {}'.format(segment_uri))
 
-    #3 delete superfluous files
-    segment_uris_to_delete = dest_segment_uris.difference(src_segment_uris)
-    for segment_uri in segment_uris_to_delete:
-        import os
-        os.remove(os.join(dest_m3u_filepath, segment_uri))
-        print('Deleting {}'.format(segment_uri))
+        #3 transcode the segments which haven't already been transcoded
+        for segment_uri in segment_uris_to_transcode:
+            evaluate.ffwd_video(os.path.join(src_m3u_filepath, segment_uri), os.path.join(dest_m3u_filepath, segment_uri), opts.checkpoint, opts.device, opts.batch_size)
 
-    #3 transcode the segments which haven't already been transcoded
-    for segment_uri in segment_uris_to_transcode:
-        evaluate.ffwd_video(os.path.join(src_m3u_filepath, segment_uri), os.path.join(dest_m3u_filepath, segment_uri), opts.checkpoint, opts.device, opts.batch_size)
+        if len(segment_uris_to_transcode) > 0:
+            #4 copy across m3u8 file
+            import shutil
+            shutil.copy(os.path.join(src_m3u_filepath,'test.m3u8'), os.path.join(dest_m3u_filepath,'test.m3u8'))
 
-    if len(segment_uris_to_transcode) > 0:
-        #4 copy across m3u8 file
-        import shutil
-        shutil.copy(os.path.join(src_m3u_filepath,'test.m3u8'), os.path.join(dest_m3u_filepath,'test.m3u8'))
-
-    import time
-    time.sleep(3)
+        import time
+        time.sleep(3)
 
 
 
