@@ -88,9 +88,9 @@ def main():
             # import shutil
             src_m3u8_obj.dump(os.path.join(dest_m3u_filepath,'test.m3u8'))
             # shutil.copy(os.path.join(src_m3u_filepath,'test.m3u8'), os.path.join(dest_m3u_filepath,'test.m3u8'))
-
-        import time
-        time.sleep(3)
+        else:
+            import time
+            time.sleep(3)
 
 
 
