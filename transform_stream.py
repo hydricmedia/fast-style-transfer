@@ -87,7 +87,7 @@ def main():
             #4 copy across m3u8 file
             # import shutil
             with open(os.path.join(dest_m3u_filepath,'test.m3u8'), 'w') as f:
-                f.write(src_m3u8_obj.dump)
+                f.write(src_m3u8_obj.dump())
             # shutil.copy(os.path.join(src_m3u_filepath,'test.m3u8'), os.path.join(dest_m3u_filepath,'test.m3u8'))
 
         import time
