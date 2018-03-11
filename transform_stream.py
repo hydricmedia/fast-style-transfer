@@ -65,7 +65,7 @@ def main():
         import os.path
         if os.path.isfile(os.path.join(dest_m3u_filepath,'test.m3u8')):
             dest_m3u8_obj = m3u8.load(os.path.join(dest_m3u_filepath,'test.m3u8'))  # this could also be an absolute filename
-            dest_segment_uris = set([x.uri for x in src_m3u8_ojb.segments])
+            dest_segment_uris = set([x.uri for x in dest_m3u8_obj.segments])
         else:
             dest_segment_uris = set()
 
