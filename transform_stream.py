@@ -75,8 +75,9 @@ def main():
         segment_uris_to_delete = dest_segment_uris.difference(src_segment_uris)
         for segment_uri in segment_uris_to_delete:
             import os
-            os.remove(os.path.join(dest_m3u_filepath, segment_uri))
-            print('Deleting {}'.format(segment_uri))
+            if os.path.isfile(os.path.join(dest_m3u_filepath,segment_uri)):
+                os.remove(os.path.join(dest_m3u_filepath, segment_uri))
+                print('Deleting {}'.format(segment_uri))
 
         #3 transcode the segments which haven't already been transcoded
         for segment_uri in segment_uris_to_transcode:
