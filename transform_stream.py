@@ -85,8 +85,10 @@ def main():
 
         if len(segment_uris_to_transcode) > 0:
             #4 copy across m3u8 file
-            import shutil
-            shutil.copy(os.path.join(src_m3u_filepath,'test.m3u8'), os.path.join(dest_m3u_filepath,'test.m3u8'))
+            # import shutil
+            with open(os.path.join(dest_m3u_filepath,'test.m3u8'), 'w') as f:
+                f.write(src_m3u8_obj.dump)
+            # shutil.copy(os.path.join(src_m3u_filepath,'test.m3u8'), os.path.join(dest_m3u_filepath,'test.m3u8'))
 
         import time
         time.sleep(3)
