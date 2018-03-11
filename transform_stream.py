@@ -72,7 +72,7 @@ def main():
         segment_uris_to_transcode = src_segment_uris.difference(dest_segment_uris)
 
         #3 delete superfluous files
-        segment_uris_to_delete = dest_segment_uris.difference(src_segment_uris)
+        segment_uris_to_delete = dest_segment_uris[:-2].difference(src_segment_uris)
         for segment_uri in segment_uris_to_delete:
             import os
             if os.path.isfile(os.path.join(dest_m3u_filepath,segment_uri)):
