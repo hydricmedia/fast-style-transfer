@@ -72,12 +72,12 @@ def main():
     segment_uris_to_delete = dest_segment_uris.difference(src_segment_uris)
     for segment_uri in segment_uris_to_delete:
         import os
-        os.remove(os.join(base_path, segment_uri))
-        print 'Deleting {}'.format(segment_uri)
+        os.remove(os.join(dest_m3u_filepath, segment_uri))
+        print('Deleting {}'.format(segment_uri))
 
     #3 transcode the segments which haven't already been transcoded
     for segment_uri in segment_uris_to_transcode:
-        evaluate.ffwd_video(os.join(base_path, segment_uri), opts.out, opts.checkpoint, opts.device, opts.batch_size)
+        evaluate.ffwd_video(os.join(src_m3u_filepath, segment_uri), os.join(dest_m3u_filepath, segment_uri), opts.checkpoint, opts.device, opts.batch_size)
 
     if len(segment_uris_to_transcode) > 0:
         #4 copy across m3u8 file
