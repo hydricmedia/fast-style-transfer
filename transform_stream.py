@@ -94,13 +94,13 @@ def main():
     import m3u8
 
     #1 get the src and dest m3u8 files  - which files need to be transcoded
-    if os.path.isfile(os.join(dest_m3u_filepath,'test.m3u8'))
+    if os.path.isfile(os.join(dest_m3u_filepath,'test.m3u8')):
         src_m3u8_obj = m3u8.load(os.join(src_m3u_filepath,'test.m3u8'))  # this could also be an absolute filename
         src_segment_uris = set([x.uri for x in src_m3u8_ojb.segments])
     else:
         src_segment_uris = set()
     import os.path
-    if os.path.isfile(os.join(dest_m3u_filepath,'test.m3u8'))
+    if os.path.isfile(os.join(dest_m3u_filepath,'test.m3u8')):
         dest_m3u8_obj = m3u8.load(os.join(dest_m3u_filepath,'test.m3u8'))  # this could also be an absolute filename
         dest_segment_uris = set([x.uri for x in src_m3u8_ojb.segments])
     else:
