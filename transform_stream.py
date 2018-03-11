@@ -53,8 +53,8 @@ def main():
 
     import m3u8
 
-    src_m3u_filepath = opt.in_path
-    dest_m3u_filepath = opt.out
+    src_m3u_filepath = opts.in_path
+    dest_m3u_filepath = opts.out
 
     #1 get the src and dest m3u8 files  - which files need to be transcoded
     if os.path.isfile(os.path.join(src_m3u_filepath,'test.m3u8')):
