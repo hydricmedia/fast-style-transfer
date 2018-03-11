@@ -59,20 +59,20 @@ def main():
         #1 get the src and dest m3u8 files  - which files need to be transcoded
         if os.path.isfile(os.path.join(src_m3u_filepath,'test.m3u8')):
             src_m3u8_obj = m3u8.load(os.path.join(src_m3u_filepath,'test.m3u8'))  # this could also be an absolute filename
-            src_segment_uris = set([x.uri for x in src_m3u8_obj.segments])
+            src_segment_uris = [x.uri for x in src_m3u8_obj.segments]
         else:
-            src_segment_uris = set()
+            src_segment_uris = list()
         import os.path
         if os.path.isfile(os.path.join(dest_m3u_filepath,'test.m3u8')):
             dest_m3u8_obj = m3u8.load(os.path.join(dest_m3u_filepath,'test.m3u8'))  # this could also be an absolute filename
-            dest_segment_uris = set([x.uri for x in dest_m3u8_obj.segments])
+            dest_segment_uris = [x.uri for x in dest_m3u8_obj.segments]
         else:
-            dest_segment_uris = set()
+            dest_segment_uris = list()
 
-        segment_uris_to_transcode = src_segment_uris.difference(dest_segment_uris)
+        segment_uris_to_transcode = set(src_segment_uris).difference(set(dest_segment_uris))
 
         #3 delete superfluous files
-        segment_uris_to_delete = dest_segment_uris[:-2].difference(src_segment_uris)
+        segment_uris_to_delete = set(dest_segment_uris[:-1]).difference(set(src_segment_uris))
         for segment_uri in segment_uris_to_delete:
             import os
             if os.path.isfile(os.path.join(dest_m3u_filepath,segment_uri)):
