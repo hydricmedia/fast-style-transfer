@@ -76,6 +76,7 @@ def main():
         from os import listdir
         from os.path import isfile, join
         ts_files = [f for f in listdir(dest_m3u_filepath) if isfile(join(dest_m3u_filepath, f)) and 'm3u8' not in f]
+        ts_files.sort(key=lambda x: os.path.getmtime(join(dest_m3u_filepath, x)))
         segment_uris_to_delete = ts_files[:-10]
 
         for segment_uri in segment_uris_to_delete:
